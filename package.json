@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shinyo1357/LEO.git"
+  },
+  "author": "shinyo1357 <shinyo1357@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
+  },
+  "name": "leo",
+  "bugs": {
+    "url": "https://github.com/shinyo1357/LEO/issues"
+  },
+  "homepage": "https://github.com/shinyo1357/LEO#readme",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "node src/main.js"
+  },
+  "keywords": [],
+  "description": ""
+}
