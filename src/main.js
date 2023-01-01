@@ -1,7 +1,6 @@
 import { Activity, Client, Events, GatewayIntentBits, Guild, ActivityType, Message } from 'discord.js';
 import dotenv from 'dotenv';
 
-
 dotenv.config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
@@ -20,6 +19,7 @@ client.on('messageCreate', (message) =>{
 	}
 }
 )}
+
 Chat("閉嘴", "是嗎");
 Chat("禁言", "可憐");
 Chat("屁眼", "屁眼");
