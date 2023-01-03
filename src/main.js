@@ -1,9 +1,10 @@
-import { Activity, Client, Events, GatewayIntentBits, Guild, ActivityType, Message } from 'discord.js';
+import { Activity, Client, Events, GatewayIntentBits, Guild, ActivityType, Message, PermissionFlagsBits } from 'discord.js';
 import dotenv from 'dotenv';
-
+import prefix from './config.json' assert { type: 'json' };
+import { joinVoiceChannel, getVoiceConnection, VoiceConnectionStatus,AudioPlayerStatus } from '@discordjs/voice';
+	
 dotenv.config();
-
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates] });
 let dinen = 3;
 client.once(Events.ClientReady, c => {
 	client.user.setStatus('dnd');
@@ -14,7 +15,7 @@ client.once(Events.ClientReady, c => {
 function Chat(messagedata, reply_chat){
 client.on('messageCreate', (message) =>{
 	if(message.author.bot) return;
-	else if(message.content == messagedata){
+	if(message.content == messagedata){
 		message.channel.send(reply_chat)
 	}
 }
@@ -25,6 +26,24 @@ Chat("禁言", "可憐");
 Chat("屁眼", "屁眼");
 Chat("哈哈", "屁眼");
 Chat("是嗎", "錯");
+client.on('messageCreate', (voicemessage)=>{
+	if(voicemessage.author.bot) return;
+	if(voicemessage.content == test){
+		const channel = voicemessage.member.voice.channel
+		joinVoiceChannel({
+			channelId: channel.id,
+			guildId: channel.guild.id,
+			adapterCreator: channel.guild.voiceAdapterCreator,
+		});
+		const player = createAudioPlayer();
+		const resource = createAudioResource('\Users\shinyo\Documents\GitHub\LEO\voice\1.mp3');
+		player.play(resource);
+		player.stop();
+		connection.destroy();
+	}
+
+})
+
 client.on('messageCreate', (message) =>{
     if(message.member.id == 624916540021800962){
 	 if(dinen == 0){
@@ -48,7 +67,6 @@ client.on('messageCreate', (message) =>{
 		dinen--;
 	 }
 	}
-
 	
 	
 })
