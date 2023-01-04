@@ -1,7 +1,9 @@
-import { Activity, Client, Events, GatewayIntentBits, Guild, ActivityType, Message, PermissionFlagsBits } from 'discord.js';
+import { Activity, Client, Events, GatewayIntentBits, Guild, ActivityType, Message, PermissionFlagsBits, Collection } from 'discord.js';
+import Discord from 'discord.js';
 import dotenv from 'dotenv';
 import prefix from './config.json' assert { type: 'json' };
-import { joinVoiceChannel, getVoiceConnection, VoiceConnectionStatus,AudioPlayerStatus } from '@discordjs/voice';
+import { joinVoiceChannel, getVoiceConnection, VoiceConnectionStatus,AudioPlayerStatus, createAudioPlayer, NoSubscriberBehavior, createAudioResource } from '@discordjs/voice';
+import fs from 'fs';
 	
 dotenv.config();
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates] });
@@ -28,18 +30,23 @@ Chat("哈哈", "屁眼");
 Chat("是嗎", "錯");
 client.on('messageCreate', (voicemessage)=>{
 	if(voicemessage.author.bot) return;
-	if(voicemessage.content == test){
+	if(voicemessage.content == "test"){
 		const channel = voicemessage.member.voice.channel
-		joinVoiceChannel({
-			channelId: channel.id,
-			guildId: channel.guild.id,
-			adapterCreator: channel.guild.voiceAdapterCreator,
-		});
-		const player = createAudioPlayer();
-		const resource = createAudioResource('\Users\shinyo\Documents\GitHub\LEO\voice\1.mp3');
-		player.play(resource);
-		player.stop();
-		connection.destroy();
+		if(channel !== null){
+			const connection = joinVoiceChannel({
+				channelId: channel.id,
+				guildId: channel.guild.id,
+				adapterCreator: channel.guild.voiceAdapterCreator,
+			});
+			const player = createAudioPlayer();
+			const resource = createAudioResource('C:/Users/shinyo/Documents/GitHub/LEO/voice/1.mp3');
+			connection.subscribe(player);
+			player.play(resource);
+		}
+		else{
+			voicemessage.channel.send('你需要先加入語音頻道');
+		}
+		
 	}
 
 })
