@@ -10,17 +10,17 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "react-scripts": "^5.0.0"
   },
   "name": "leo",
   "bugs": {
     "url": "https://github.com/shinyo1357/LEO/issues"
   },
   "homepage": "https://github.com/shinyo1357/LEO#readme",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "node main.js"
+    "dev": "node main.js"
   },
   "keywords": [],
   "description": ""

@@ -1,17 +1,26 @@
 import { Activity, Client, Events, GatewayIntentBits, Guild, ActivityType, Message, PermissionFlagsBits, Collection } from 'discord.js';
-import Discord from 'discord.js';
 import dotenv from 'dotenv';
-import prefix from './config.json' assert { type: 'json' };
+//import prefix from './config.json' assert { type: 'json' };
 import { joinVoiceChannel, getVoiceConnection, VoiceConnectionStatus,AudioPlayerStatus, createAudioPlayer, NoSubscriberBehavior, createAudioResource } from '@discordjs/voice';
-import fs from 'fs';
-	
+import { commandLoader } from './commandLoader.js';
 dotenv.config();
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates] });
-let dinen = 3;
+client.commands = new Collection()
 client.once(Events.ClientReady, c => {
 	client.user.setStatus('dnd');
 	client.user.setActivity('吾乃LEO之王，犯我者必禁言', { type: ActivityType.Watching });
 	console.log(`Ready! Logged in as ${c.user.tag}`);
+});
+let dinen = 3;
+const prefix = "?";
+console.log(prefix)
+client.on("messageCreate", (message) => {
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+	console.log("123")
+    const [command, ...args] = message.content.slice(prefix.length).split(/ +/g);
+	const commandName = client.commands.get(command);
+	commandName?.run(message, args, client);
+
 });
 
 function Chat(messagedata, reply_chat){
@@ -77,6 +86,6 @@ client.on('messageCreate', (message) =>{
 	
 	
 })
-
+commandLoader(client, './Commands');
 client.login(process.env.TOKEN);
 		
