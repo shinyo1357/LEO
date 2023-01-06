@@ -1,11 +1,9 @@
-import { Activity, Client, Events, GatewayIntentBits, Guild, ActivityType, Message, PermissionFlagsBits, Collection } from 'discord.js';
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates] });
+import { joinVoiceChannel, createAudioPlayer, createAudioResource } from '@discordjs/voice';
 const oof =  {
     name: "oof",
-    run: client.on('messageCreate', (voicemessage)=>{
-        if(voicemessage.author.bot) return;
-        if(voicemessage.content == "test"){
-            const channel = voicemessage.member.voice.channel
+    run: async (message) => {
+            const channel = message.member.voice.channel
+            setTimeout(() =>{
             if(channel !== null){
                 const connection = joinVoiceChannel({
                     channelId: channel.id,
@@ -13,16 +11,18 @@ const oof =  {
                     adapterCreator: channel.guild.voiceAdapterCreator,
                 });
                 const player = createAudioPlayer();
-                const resource = createAudioResource('C:/Users/shinyo/Documents/GitHub/LEO/voice/1.mp3');
+                const resource = createAudioResource('C:/Users/shinyo/Documents/GitHub/LEO/voice/oof.mp3');
                 connection.subscribe(player);
                 player.play(resource);
             }
             else{
-                voicemessage.channel.send('你需要先加入語音頻道');
-            }
+                message.channel.send('你需要先加入語音頻道');
+            }}
+            ,500)
+            
             
         }
     
-    })
-}
-export { oof }
+    }   
+
+export default oof
