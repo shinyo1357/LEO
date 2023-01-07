@@ -5,7 +5,6 @@ async function loadCommands(client, directory) {
     });
     for (const file of files) {
         if (file.isDirectory()) {
-            console.log("HI")      
             loadCommands(client, `${directory}/${file.name}`);
         } else if (file.name.endsWith(".js")) {
             const cmd = (await import(`${directory}/${file.name}`)).default;
